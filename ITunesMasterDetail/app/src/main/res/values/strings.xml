@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">ITunes Master Detail</string>
+    <string name="day_mon">Mon</string>
+    <string name="day_tue">Tue</string>
+    <string name="day_wed">Wed</string>
+    <string name="day_thu">Thu</string>
+    <string name="day_fri">Fri</string>
+    <string name="day_sat">Sat</string>
+    <string name="day_sun">Sun</string>
+    <string name="state_locked">LOCKED</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="level">LEVEL %1$s</string>
+    <string name="taming_temper">Taming temper</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="watch_trailer">Watch Trailer</string>
+    <string name="visit_website">Visit Website</string>
+    <string name="artist">Artist</string>
+    <string name="genre">Genre</string>
+    <string name="description">Description</string>
+    <string name="favorite_movies">Favorite Movies</string>
+    <string name="no_favorites_added_yet">No favorites added yet.</string>
+    <string name="last_visit">Last Visit: %1$s</string>
+    <string name="search">Search</string>
+    <string name="favorites">Favorites</string>
+    <string name="search_box_cannot_be_empty_enter_a_term_to_find_results">Search box cannot be empty. Enter a term to find results.</string>
+    <string name="no_result_found">No Result Found</string>
+    <string name="search_movies">Search Movies</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="itunes">iTunes</string>
+    <string name="master_detail">Master Detail</string>
+</resources>
