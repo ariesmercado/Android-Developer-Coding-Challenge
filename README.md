@@ -1,4 +1,4 @@
-# iTunes Master Collection
+# iTunes Master Detail
 
 ## Overview
 This Android application is a master-detail app that allows users to search for movies from the iTunes Search API, view detailed information about each movie, and manage their favorites.
