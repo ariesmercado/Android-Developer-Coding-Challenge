@@ -8,7 +8,7 @@ This Android application is a master-detail app that allows users to search for 
 ### 1. Movie Favorites
 - Users can **favorite** movies directly from the list screen.
 - Users can also favorite movies from the detail screen.
-- Favorited movies are displayed as favorites on the list screen upon returning from the detail view.
+- Favorited movies are displayed as favorites on the list screen.
 - The app supports offline access to the list of favorite movies.
 
 ### 2. Movie Search
