@@ -3,6 +3,7 @@ package com.ariesmercado.itunesmasterdetail.presenter.search
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
@@ -172,6 +173,12 @@ fun MainScreen(
             selectedTab = selectedTab,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
+
+        BackHandler {
+            if (selectedTab.intValue == 1) {
+                selectedTab.intValue = 0
+            }
+        }
     }
 }
 

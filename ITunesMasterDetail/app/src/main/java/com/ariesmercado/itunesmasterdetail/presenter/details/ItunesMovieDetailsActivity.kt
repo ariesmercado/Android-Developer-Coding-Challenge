@@ -16,6 +16,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -82,6 +83,7 @@ class ItunesMovieDetailsActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieDetailsScreen(
     movie: Movie,
@@ -90,100 +92,137 @@ fun MovieDetailsScreen(
     onWatchPreviewClicked: (String) -> Unit,
     onVisitWebsiteClicked: (String) -> Unit
 ) {
-    val isFavorite = favorites.any { movie.trackId in favorites}
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        item {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(movie.artworkUrl100)
-                        .crossfade(true)
-                        .diskCachePolicy(CachePolicy.ENABLED)
-                        .memoryCachePolicy(CachePolicy.ENABLED)
-                        .build(),
-                    contentDescription = movie.trackName,
-                    modifier = Modifier
-                        .fillMaxWidth(.3f)
-                        .clip(RoundedCornerShape(8.dp)),
-                    contentScale = ContentScale.Crop,
-                    error = painterResource(id = R.drawable.baseline_photo)
+    val isFavorite = favorites.any { movie.trackId in favorites }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        MovieDetailsTopBar()
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            item {
+                MovieHeader(
+                    movie = movie,
+                    isFavorite = isFavorite,
+                    onToggleFavorite = onToggleFavorite,
+                    onWatchPreviewClicked = onWatchPreviewClicked,
+                    onVisitWebsiteClicked = onVisitWebsiteClicked
                 )
-
-                Column(
-                    modifier = Modifier
-                        .weight(1f),
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text(
-                            text = movie.trackName.orEmpty(),
-                            style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.weight(1f)
-                        )
-
-                        IconButton(onClick = { onToggleFavorite.invoke(movie, isFavorite) }) {
-                            Icon(
-                                imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                                contentDescription = if (isFavorite) stringResource(R.string.remove_from_favorites) else stringResource(
-                                    R.string.add_to_favorites
-                                ),
-                                tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-
-                    Button(
-                        onClick = {
-                            movie.previewUrl?.let { onWatchPreviewClicked.invoke(it) }
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(text = stringResource(R.string.watch_trailer))
-                    }
-
-                    OutlinedButton(
-                        onClick = {
-                            movie.trackViewUrl?.let { onVisitWebsiteClicked.invoke(it) }
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(text = stringResource(R.string.visit_website))
-                    }
-                }
             }
-        }
 
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
 
-            movie.artistName?.let { MovieDetailItem(label = stringResource(R.string.artist), value = it) }
-
-            MovieDetailItem(label = "Release Date", value = formatDate(movie.releaseDate.orEmpty()))
-            movie.primaryGenreName?.let { MovieDetailItem(label = stringResource(R.string.genre), value = it) }
-            MovieDetailItem(
-                label = "Price",
-                value = "${movie.currency} ${movie.trackPrice}",
-                valueColor = Color.Green
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            movie.longDescription?.let { MovieDetailItem(label = stringResource(R.string.description), value = it) }
+                MovieDetailsContent(movie)
+            }
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MovieDetailsTopBar() {
+    TopAppBar(
+        title = {
+            Text(
+                text = stringResource(R.string.movie_details),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        },
+        modifier = Modifier.shadow(8.dp),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary
+        )
+    )
+}
+
+@Composable
+fun MovieHeader(
+    movie: Movie,
+    isFavorite: Boolean,
+    onToggleFavorite: (Movie, Boolean) -> Unit,
+    onWatchPreviewClicked: (String) -> Unit,
+    onVisitWebsiteClicked: (String) -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(movie.artworkUrl100)
+                .crossfade(true)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .build(),
+            contentDescription = movie.trackName,
+            modifier = Modifier
+                .fillMaxWidth(.3f)
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop,
+            error = painterResource(id = R.drawable.baseline_photo)
+        )
+
+        Column(
+            modifier = Modifier.weight(1f),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    text = movie.trackName.orEmpty(),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.weight(1f)
+                )
+
+                IconButton(onClick = { onToggleFavorite.invoke(movie, isFavorite) }) {
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = if (isFavorite) stringResource(R.string.remove_from_favorites) else stringResource(
+                            R.string.add_to_favorites
+                        ),
+                        tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(
+                onClick = { movie.previewUrl?.let { onWatchPreviewClicked(it) } },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = stringResource(R.string.watch_trailer))
+            }
+
+            OutlinedButton(
+                onClick = { movie.trackViewUrl?.let { onVisitWebsiteClicked(it) } },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = stringResource(R.string.visit_website))
+            }
+        }
+    }
+}
+
+@Composable
+fun MovieDetailsContent(movie: Movie) {
+    movie.artistName?.let { MovieDetailItem(label = stringResource(R.string.artist), value = it) }
+    MovieDetailItem(label = "Release Date", value = formatDate(movie.releaseDate.orEmpty()))
+    movie.primaryGenreName?.let { MovieDetailItem(label = stringResource(R.string.genre), value = it) }
+    MovieDetailItem(
+        label = "Price",
+        value = "${movie.currency} ${movie.trackPrice}",
+        valueColor = Color.Green
+    )
+    Spacer(modifier = Modifier.height(16.dp))
+    movie.longDescription?.let { MovieDetailItem(label = stringResource(R.string.description), value = it) }
+}
+
 
 @Composable
 fun MovieDetailItem(label: String, value: String, valueColor: Color = Color.Unspecified) {
