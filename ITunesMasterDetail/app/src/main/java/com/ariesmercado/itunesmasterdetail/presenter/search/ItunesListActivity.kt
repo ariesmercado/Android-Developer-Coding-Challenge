@@ -173,12 +173,6 @@ fun MainScreen(
             selectedTab = selectedTab,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
-
-        BackHandler {
-            if (selectedTab.intValue == 1) {
-                selectedTab.intValue = 0
-            }
-        }
     }
 }
 
