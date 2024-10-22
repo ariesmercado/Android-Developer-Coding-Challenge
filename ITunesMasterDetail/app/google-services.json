@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "427646268238",
+    "project_id": "itunesmasterdata",
+    "storage_bucket": "itunesmasterdata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427646268238:android:42cb8ce72941a68da4a41f",
+        "android_client_info": {
+          "package_name": "com.ariesmercado.itunesmasterdetail"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABlUUnJdoDXGjJ7i2YpRPb-wU1TQVw-5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

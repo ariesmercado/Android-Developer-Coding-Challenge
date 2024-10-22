@@ -29,6 +29,7 @@ okhttpVersion = "5.0.0-alpha.11"
 okhttpProfilerVersion = "1.0.5"
 sqliteVersion = "2.3.1"
 exoplayer = "1.0.0"
+firebase = "4.4.2"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
@@ -86,3 +87,5 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+firebase = { id = "com.google.gms.google-services", version.ref = "firebase" }
+
